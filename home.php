@@ -1,4 +1,5 @@
 <?php include 'db_connect.php' ?>
+
 <style>
    span.float-right.summary_icon {
     font-size: 3rem;
@@ -91,8 +92,13 @@
                                         <span class="float-right summary_icon"> <i class="fa fa-file-invoice "></i></span>
                                         <h4><b>
                                             <?php 
-                                             $payment = $conn->query("SELECT sum(amount) as paid FROM payments where date(date_created) = '".date('Y-m-d')."' "); 
-                                             echo $payment->num_rows > 0 ? number_format($payment->fetch_array()['paid'],2) : 0;
+                                            //  $payment = $conn->query("SELECT sum(amount) as paid FROM payments where date(date_created) = '".date('Y-m-d')."' "); 
+                                            //  echo $payment->num_rows > 0 ? number_format($payment->fetch_array()['paid'],2) : 0;
+
+                                            $payment = $conn->query("SELECT sum(amount) as paid FROM payments where date(date_created) = '".date('Y-m-d')."' ");
+                                            $paid = $payment->fetch_array()['paid'] ?? 0; // Nếu NULL thì gán 0
+                                            echo number_format($paid, 2);
+
                                              ?>
                                         </b></h4>
                                         <p><b>Payments This Month</b></p>
