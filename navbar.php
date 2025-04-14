@@ -1,4 +1,10 @@
 
+<head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+</head>
+
 <style>
 	.collapse a{
 		text-indent:10px;
@@ -6,7 +12,43 @@
 	nav#sidebar{
 		/*background: url(assets/uploads/<?php echo $_SESSION['system']['cover_img'] ?>) !important*/
 	}
+
+	#sidebar {
+    transition: all 0.3s ease-in-out;
+    width: 250px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    background: #343a40;
+}
+#sidebar.collapsed {
+    margin-left: -250px;
+}
+#toggle-sidebar {
+    position: fixed;
+    left: 0px;
+    top: 5px;
+    background:  #007bff;
+    color: black;
+    border: none;
+    padding: 8px 10px;
+    /* cursor: pointer; */
+    z-index: 1050;  /* Hiển thị trên tất cả */
+}
+#toggle-sidebar:hover {
+    background: #0056b3;
+}
+
+
 </style>
+
+
+<!-- Nút Toggle -->
+<button id="toggle-sidebar" class="btn btn-primary m-2">
+    <i class="fa fa-bars"></i>
+</button>
+
 
 <nav id="sidebar" class='mx-lt-5 bg-dark' >
 		
@@ -21,6 +63,23 @@
 				<a href="index.php?page=users" class="nav-item nav-users"><span class='icon-field'><i class="fa fa-users "></i></span> Users</a>
 				<!-- <a href="index.php?page=site_settings" class="nav-item nav-site_settings"><span class='icon-field'><i class="fa fa-cogs text-danger"></i></span> System Settings</a> -->
 			<?php endif; ?>
+
+			<a href="index.php?page=reviews" class="nav-item nav-reviews">
+            	<span class='icon-field'><i class="fa fa-comments "></i></span> Reviews & Comments
+        	</a>
+
+			<a href="index.php?page=contracts" class="nav-item nav-contracts"><span class='icon-field'><i class="fa fa-file-alt"></i></span> Contracts</a>
+			
+			 <!-- Hẹn lịch xem nhà -->
+			<a href="index.php?page=schedule_viewing" class="nav-item nav-schedule">
+            	<span class='icon-field'><i class="fa fa-calendar-check"></i></span> Schedule Viewing
+        	</a>
+			
+			<!-- Quản lý lịch hẹn -->
+			<a href="index.php?page=manage_appointments" class="nav-item nav-manage_appointments">
+    			<span class='icon-field'><i class="fa fa-calendar"></i></span> Manage Appointments
+			</a>
+
 		</div>
 
 </nav>
@@ -30,4 +89,17 @@
 		$($(this).attr('href')).collapse()
 	})
 	$('.nav-<?php echo isset($_GET['page']) ? $_GET['page'] : '' ?>').addClass('active')
+
+	$(document).ready(function(){
+        // Làm nổi bật menu tương ứng với trang hiện tại
+        $('.nav-<?php echo isset($_GET['page']) ? $_GET['page'] : '' ?>').addClass('active');
+    });
+
+	$(document).ready(function(){
+    	$('#toggle-sidebar').click(function(){
+        	$('#sidebar').toggleClass('collapsed');
+    	});
+	});
+
 </script>
+
